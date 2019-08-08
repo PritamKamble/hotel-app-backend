@@ -3,10 +3,18 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const menuRoute = require("./api/routes/menu");
-const categoryRoute = require("./api/routes/category");
-const hotelRoute = require("./api/routes/hotel");
-const userRoute = require("./api/routes/user");
+
+/////////////---------Routes------///////////////////
+
+const menuRoute = require("./api/hotel/routes/menu");
+const categoryRoute = require("./api/hotel/routes/category");
+const hotelRoute = require("./api/hotel/routes/hotel");
+const userRoute = require("./api/hotel/routes/user");
+const customerRoute = require("./api/customer/routes/customer");
+const orderRoute = require("./api/order/routes/order");
+
+//////////////////////////////////////////////////////
+
 
 mongoose.connect('mongodb+srv://node-shop:node-shop@node-shop-rest-slxeu.mongodb.net/hotel?retryWrites=true&w=majority',
     { useNewUrlParser: true });
@@ -40,7 +48,12 @@ app.use("/hotel", hotelRoute);
 
 app.use("/user", userRoute);
 
-//////////////////////////////////////
+app.use("/customer", customerRoute);
+
+app.use("/order", orderRoute);
+
+/////////////////////////////////////////////
+
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
